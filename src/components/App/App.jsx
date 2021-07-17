@@ -1,36 +1,65 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import MainPage from "../pages/MainPage";
 import TransactionPage from "../pages/TransactionPage";
+import {
+  getTransactionsApi,
+  postTransactionCatApi,
+} from "../../utils/apiService";
 import "./App.css";
 
-class App extends Component {
-  state = {
-    transType: "",
+const App = () => {
+  const [transType, setTransType] = useState("");
+  const [incomes, setIncomes] = useState([]);
+  const [costs, setCosts] = useState([]);
+  const [incomesCat, setIncomesCat] = useState([]);
+  const [costsCat, setCostsCat] = useState([]);
+
+  const handleOpenTransaction = (transType) => {
+    setTransType(transType);
   };
 
-  handleOpenTransaction = (transType) => {
-    this.setState({ transType });
+  const handleCloseTransaction = () => {
+    setTransType("");
   };
 
-  handleCloseTransaction = () => {
-    this.setState({ transType: "" });
+  const handleAddTransaction = ({ transType, transaction }) => {
+    transType === "incomes" && setIncomes((prev) => [...prev, transaction]);
+    transType === "costs" && setCosts((prev) => [...prev, transaction]);
   };
 
-  render() {
-    const { transType } = this.state;
-    return (
-      <>
-        {!transType ? (
-          <MainPage handleOpenTransaction={this.handleOpenTransaction} />
-        ) : (
-          <TransactionPage
-            transType={transType}
-            handleCloseTransaction={this.handleCloseTransaction}
-          />
-        )}
-      </>
-    );
-  }
-}
+  const setTransactionsCat = ({ categories, transType }) => {
+    transType === "incomes" && setIncomesCat(categories);
+    transType === "costs" && setCostsCat(categories);
+  };
+
+  const postTransactionCat = ({ transType, category }) =>
+    postTransactionCatApi({ apiEnd: transType, category }).then((category) => {
+      transType === "incomes" && setIncomesCat((prev) => [...prev, category]);
+      transType === "costs" && setCostsCat((prev) => [...prev, category]);
+    });
+
+  useEffect(() => {
+    getTransactionsApi("incomes").then((incomes) => setIncomes(incomes));
+    getTransactionsApi("costs").then((costs) => setCosts(costs));
+  }, []);
+
+  return (
+    <>
+      {!transType ? (
+        <MainPage handleOpenTransaction={handleOpenTransaction} />
+      ) : (
+        <TransactionPage
+          transType={transType}
+          incomesCatProp={incomesCat}
+          costsCatProp={costsCat}
+          handleCloseTransaction={handleCloseTransaction}
+          handleAddTransaction={handleAddTransaction}
+          postTransactionCat={postTransactionCat}
+          setTransactionsCat={setTransactionsCat}
+        />
+      )}
+    </>
+  );
+};
 
 export default App;

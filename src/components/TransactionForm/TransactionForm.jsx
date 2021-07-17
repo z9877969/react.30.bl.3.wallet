@@ -2,76 +2,61 @@ import { Component } from "react";
 import LabelInput from "../_share/LabelInput/LabelInput";
 import Button from "../_share/Button/Button";
 
-class TransactionForm extends Component {
-  state = {
-    date: "",
-    time: "",
-    category: "",
-    sum: "",
-    currency: "",
-    comment: "",
-  };
+const TransactionForm = ({ dataForm, setDataForm, handleToggleCatList, handleFormSubmit }) => {
+  const { date, time, category, sum, currency, comment } = dataForm;
 
-  handleDataChange = (e) => {
+  const handleDataChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+    setDataForm((prev) => ({ ...prev, [name]: value }));
+  };  
 
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-    this.props.postTransaction(this.state);
-  };
-
-  render() {
-    const { date, time, category, sum, currency, comment } = this.state;
-    return (
-      <form onSubmit={this.handleFormSubmit}>
-        <Button title="OK" type="submit" />
-        <LabelInput
-          cbOnChange={this.handleDataChange}
-          type="date"
-          title="День"
-          name="date"
-          value={date}
-        />
-        <LabelInput
-          cbOnChange={this.handleDataChange}
-          type="time"
-          title="Время"
-          name="time"
-          value={time}
-        />
-        <LabelInput
-          cbOnChange={this.handleDataChange}
-          type="button"
-          title="Категория"
-          name="category"
-          value="Eat"
-        />
-        <LabelInput
-          cbOnChange={this.handleDataChange}
-          title="Сумма"
-          name="sum"
-          value={sum}
-          placeholder="Введите сумму"
-        />
-        <LabelInput
-          cbOnChange={this.handleDataChange}
-          type="button"
-          title="Валюта"
-          name="currency"
-          value="UAH"
-        />
-        <LabelInput
-          cbOnChange={this.handleDataChange}
-          title="Комментарий"
-          name="comment"
-          value={comment}
-          placeholder="Комментарий"
-        />
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleFormSubmit}>
+      <Button title="OK" type="submit" />
+      <LabelInput
+        cbOnChange={handleDataChange}
+        type="date"
+        title="День"
+        name="date"
+        value={date}
+      />
+      <LabelInput
+        cbOnChange={handleDataChange}
+        type="time"
+        title="Время"
+        name="time"
+        value={time}
+      />
+      <LabelInput
+        cbOnClick={handleToggleCatList}
+        type="button"
+        title="Категория"
+        name="category"
+        value={category}
+      />
+      <LabelInput
+        cbOnChange={handleDataChange}
+        title="Сумма"
+        name="sum"
+        value={sum}
+        placeholder="Введите сумму"
+      />
+      <LabelInput
+        cbOnChange={handleDataChange}
+        type="button"
+        title="Валюта"
+        name="currency"
+          
+      />
+      <LabelInput
+        cbOnChange={handleDataChange}
+        title="Комментарий"
+        name="comment"
+        value={comment}
+        placeholder="Комментарий"
+      />
+    </form>
+  );
+};
 
 export default TransactionForm;

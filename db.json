@@ -1,0 +1,66 @@
+{
+  "costs": [``
+    {
+      "date": "2021-07-15",
+      "time": "20:11",
+      "category": "",
+      "sum": "1000",
+      "currency": "",
+      "comment": "sdfsdfdsfdfs",
+      "id": 4
+    },
+    {
+      "date": "2021-07-01",
+      "time": "20:24",
+      "category": "",
+      "sum": "1000",
+      "currency": "",
+      "comment": "sdfsdfdsfdfs",
+      "id": 5
+    }
+  ],
+  "incomes": [
+    {
+      "date": "2021-07-23",
+      "time": "19:54",
+      "category": "",
+      "sum": "200",
+      "currency": "",
+      "comment": "sdfsdfdsfdfs",
+      "id": 1
+    },
+    {
+      "date": "",
+      "time": "",
+      "category": "",
+      "sum": "",
+      "currency": "",
+      "comment": "",
+      "id": 2
+    }
+  ],
+  "incomesCat": [
+    {
+      "name": "Зарплата",
+      "id": 1
+    },
+    {
+      "name": "Бонус",
+      "id": 2
+    }
+  ],
+  "costsCat": [
+    {
+      "name": "Еда",
+      "id": 1
+    },
+    {
+      "name": "Напитки",
+      "id": 2
+    },
+    {
+      "name": "Разное",
+      "id": 3
+    }
+  ]
+}

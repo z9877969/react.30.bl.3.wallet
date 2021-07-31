@@ -17,6 +17,24 @@
       "currency": "",
       "comment": "sdfsdfdsfdfs",
       "id": 5
+    },
+    {
+      "date": "2021-07-23",
+      "time": "23:06",
+      "category": "Напитки",
+      "sum": "1000",
+      "currency": "",
+      "comment": "sdfsdfdsfdfs",
+      "id": 6
+    },
+    {
+      "date": "2021-07-08",
+      "time": "21:12",
+      "category": "Разное",
+      "sum": "200",
+      "currency": "",
+      "comment": "sdfsdfdsfdfs",
+      "id": 7
     }
   ],
   "incomes": [
@@ -37,6 +55,15 @@
       "currency": "",
       "comment": "",
       "id": 2
+    },
+    {
+      "date": "2021-07-31",
+      "time": "17:03",
+      "category": "Бонус",
+      "sum": "1000",
+      "currency": "",
+      "comment": "sdfsdfdsfdfs",
+      "id": 3
     }
   ],
   "incomesCat": [

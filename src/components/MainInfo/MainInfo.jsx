@@ -1,14 +1,20 @@
+import { useHistory, useLocation } from "react-router-dom";
 import Button from "../_share/Button/Button";
 import css from "./MainInfo.module.css";
 
-const MainInfo = ({
-  dataMainInfo,
-  title,
-  btnTitle,
-  transType,
-  handleOpenTransaction,
-}) => {
-  const cbOnClick = () => handleOpenTransaction(transType);
+const MainInfo = ({ dataMainInfo, title, btnTitle, transType }) => {
+  const history = useHistory();
+  // const location = useLocation()
+
+  const newLocation = {
+    pathname: "/transaction/" + transType,
+    state: {
+      surprize: "surprize",
+      from: history.location,
+    },
+  };
+
+  const handleOpenTransaction = () => history.push(newLocation);
 
   return (
     <section className={css.container}>
@@ -23,7 +29,7 @@ const MainInfo = ({
           </li>
         ))}
       </ul>
-      <Button title={btnTitle} cbOnClick={cbOnClick} />
+      <Button title={btnTitle} cbOnClick={handleOpenTransaction} />
     </section>
   );
 };

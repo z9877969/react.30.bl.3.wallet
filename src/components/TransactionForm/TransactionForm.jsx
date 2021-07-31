@@ -2,7 +2,7 @@ import { Component } from "react";
 import LabelInput from "../_share/LabelInput/LabelInput";
 import Button from "../_share/Button/Button";
 
-const TransactionForm = ({ dataForm, setDataForm, handleToggleCatList, handleFormSubmit }) => {
+const TransactionForm = ({ dataForm, setDataForm, handleOpenCatList, handleFormSubmit }) => {
   const { date, time, category, sum, currency, comment } = dataForm;
 
   const handleDataChange = (e) => {
@@ -28,7 +28,7 @@ const TransactionForm = ({ dataForm, setDataForm, handleToggleCatList, handleFor
         value={time}
       />
       <LabelInput
-        cbOnClick={handleToggleCatList}
+        cbOnClick={handleOpenCatList}
         type="button"
         title="Категория"
         name="category"

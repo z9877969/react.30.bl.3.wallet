@@ -1,17 +1,13 @@
 import Button from "../_share/Button/Button";
 
-const CategoriesTransactions = ({
-  categories,
-  handleToggleCatList,
-  setCategory,
-}) => {
+const CategoriesTransactions = ({ categories, handleGoBack, setCategory }) => {
   return (
     <>
-      <Button title={"GoBAck"} cbOnClick={handleToggleCatList} />
+      <Button title={"GoBAck"} cbOnClick={handleGoBack} />
       <h1>Категории</h1>
       <ul>
         {categories.map((el) => (
-          <li>
+          <li key={el.name}>
             <p onClick={() => setCategory(el.name)}>{el.name}</p>
             <select name="cat-options">
               <option value="">...</option>

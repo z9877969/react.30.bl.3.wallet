@@ -2,13 +2,18 @@ import { Component } from "react";
 import LabelInput from "../_share/LabelInput/LabelInput";
 import Button from "../_share/Button/Button";
 
-const TransactionForm = ({ dataForm, setDataForm, handleOpenCatList, handleFormSubmit }) => {
+const TransactionForm = ({
+  dataForm,
+  setDataForm,
+  handleOpenCatList,
+  handleFormSubmit,
+}) => {
   const { date, time, category, sum, currency, comment } = dataForm;
 
   const handleDataChange = (e) => {
     const { name, value } = e.target;
     setDataForm((prev) => ({ ...prev, [name]: value }));
-  };  
+  };
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -46,7 +51,6 @@ const TransactionForm = ({ dataForm, setDataForm, handleOpenCatList, handleFormS
         type="button"
         title="Валюта"
         name="currency"
-          
       />
       <LabelInput
         cbOnChange={handleDataChange}

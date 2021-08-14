@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useHistory, useRouteMatch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import TransactionForm from "../components/TransactionForm/TransactionForm";
 import TransactionHeader from "../components/TransactionHeader/TransactionHeader";
 import Section from "../components/_share/Section/Section";
@@ -19,9 +19,14 @@ import {
   setEmptyCostsCats,
   setEmptyIncomesCats,
 } from "../redux/categories/categoriesActions";
-import { getFromLS, setToLS } from "../utils/apiLocalStorage";
+import withLastCategories from "../hoc/withLastCategories";
 
-const TransactionPage = ({ history, match }) => {
+const TransactionPage = ({
+  history,
+  match,
+  lastCategories,
+  setLastCategory,
+}) => {
   const dispatch = useDispatch();
   const {
     params: { transType },
@@ -31,8 +36,6 @@ const TransactionPage = ({ history, match }) => {
 
   const isEmpty = useSelector((state) => state.categories.isEmpty);
   const { incomesCat, costsCat } = useSelector((state) => state.categories);
-  
-  const lastCategories = getFromLS("lastCats");
 
   const [dataForm, setDataForm] = useState({
     date: "",
@@ -96,16 +99,9 @@ const TransactionPage = ({ history, match }) => {
   useEffect(() => {
     if (categories[0]) {
       setDataForm((prev) => ({ ...prev, category: categories[0].name }));
-      lastCategories
-        ? setToLS("lastCats", {
-            ...lastCategories,
-            [transType]: categories[0].name,
-          })
-        : setToLS("lastCats", { [transType]: categories[0].name });
+      setLastCategory(categories[0]);
     }
   }, [categories[0]]);
-
-  // console.log("transactionPage");
 
   return (
     <Switch>
@@ -136,4 +132,4 @@ const TransactionPage = ({ history, match }) => {
   );
 };
 
-export default TransactionPage;
+export default withLastCategories(TransactionPage);

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import MainInfo from "../MainInfo/MainInfo";
-import Button from "../_share/Button/Button";
-import Section from "../_share/Section/Section";
-import mainInfoData from "../../assets/mainInfoData.json";
+import MainInfo from "../components/MainInfo/MainInfo"; //MainInfo/MainInfo
+import Button from "../components/_share/Button/Button";
+import Section from "../components/_share/Section/Section";
+import mainInfoData from "../assets/mainInfoData.json";
 
 const { balanceMainInfo, costsMainInfo, incomesMainInfo } = mainInfoData;
 

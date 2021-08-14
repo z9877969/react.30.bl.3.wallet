@@ -7,8 +7,7 @@ export const postTransactionApi = ({ apiEnd, data }) => {
     .post(apiEnd, data)
     .then(({ data }) => data)
     .catch((err) => {
-      console.log("err postTransactionApi :>> ", err);
-      //   throw err;
+      throw err;
     });
 };
 
@@ -18,19 +17,25 @@ export const getTransactionsApi = (apiEnd) => {
     .then(({ data }) => {
       return data;
     })
-    .catch((err) => console.log("err getTransactions:>> ", err));
+    .catch((err) => {
+      throw err;
+    });
 };
 
 export const postTransactionCatApi = ({ apiEnd, category }) => {
   return axios
     .post(apiEnd, category)
     .then(({ data }) => data)
-    .catch((err) => console.log("err postTransactionCat:>> ", err));
+    .catch((err) => {
+      throw err;
+    });
 };
 
 export const getTransactionCatsApi = (apiEnd) => {
   return axios
     .get(apiEnd)
     .then(({ data }) => data)
-    .catch((err) => console.log("err getTransactionCatsApi:>> ", err));
+    .catch((err) => {
+      throw err;
+    });
 };

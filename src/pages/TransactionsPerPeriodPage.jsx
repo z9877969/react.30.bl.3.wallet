@@ -1,8 +1,10 @@
-import { Link, useParams } from "react-router-dom";
-import Section from "../_share/Section/Section";
-import ButtonGoBack from "../ButtonGoBack/ButtonGoBack";
-import LabelInput from "../_share/LabelInput/LabelInput";
-import Button from "../_share/Button/Button";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Section from "../components/_share/Section/Section";
+import ButtonGoBack from "../components/ButtonGoBack/ButtonGoBack";
+import LabelInput from "../components/_share/LabelInput/LabelInput";
+import Button from "../components/_share/Button/Button";
+import { getTransactions } from "../redux/transactions/transactionsSelector";
 
 const options = [
   {
@@ -27,11 +29,12 @@ const options = [
   },
 ];
 
-const TransactionsPerPeriodPage = (props) => {
-  const { transType } = useParams();
+const TransactionsPerPeriodPage = ({ match }) => {
+  const { transType } = match.params;
+  const allTransactions = useSelector(getTransactions);
 
   // const transactions = transType === "incomes" ? incomes : costs;
-  const transactions = props[transType];
+  const transactions = allTransactions[transType];
 
   const allSum = transactions.reduce((acc, el) => acc + Number(el.sum), 0);
 
@@ -46,19 +49,19 @@ const TransactionsPerPeriodPage = (props) => {
         ))}
       </select>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button title="<" />
+        <Button title="prev" />
 
         <LabelInput title="июль 2021" type="date" name="date" />
 
-        <Button title=">" />
+        <Button title="next" />
       </div>
       <table>
         <tr>
           <th>ВСЕГО:</th>
           <th>{allSum}</th>
         </tr>
-        {transactions.map((transaction) => (
-          <tr>
+        {transactions.map((transaction, idx) => (
+          <tr key={idx}>
             <td>{transaction.category}</td>
             <td>
               <span>{transaction.sum}</span>

@@ -1,6 +1,10 @@
 import Button from "../_share/Button/Button";
 
-const CategoriesTransactions = ({ categories, handleGoBack, setCategory }) => {
+const CategoriesTransactions = ({
+  categories,
+  handleGoBack,
+  handleSetCategory,
+}) => {
   return (
     <>
       <Button title={"GoBAck"} cbOnClick={handleGoBack} />
@@ -8,7 +12,7 @@ const CategoriesTransactions = ({ categories, handleGoBack, setCategory }) => {
       <ul>
         {categories.map((el) => (
           <li key={el.name}>
-            <p onClick={() => setCategory(el.name)}>{el.name}</p>
+            <p onClick={() => handleSetCategory(el.name)}>{el.name}</p>
             <select name="cat-options">
               <option value="">...</option>
               <option value="edit">edit</option>

@@ -1,24 +1,24 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import MainPage from "../pages/MainPage";
-import TransactionPage from "../pages/TransactionPage";
-import TransactionsPerPeriod from "../pages/TransactionsPerPeriodPage";
+import MainPage from "../../pages/MainPage";
+import TransactionPage from "../../pages/TransactionPage";
+import TransactionsPerPeriod from "../../pages/TransactionsPerPeriodPage";
 import {
-  getTransactionsApi,
-  postTransactionCatApi,
-} from "../../utils/apiService";
+  getCosts,
+  getIncomes,
+} from "../../redux/transactions/transactionsOperations";
+import { getTransactions } from "../../redux/transactions/transactionsSelector";
+import { postTransactionCatApi } from "../../utils/apiService";
 import "./App.css";
 
 const App = () => {
-  const [incomes, setIncomes] = useState([]);
-  const [costs, setCosts] = useState([]);
+  const dispatch = useDispatch();
+  const { costs, incomes } = useSelector(getTransactions);
+
   const [incomesCat, setIncomesCat] = useState([]);
   const [costsCat, setCostsCat] = useState([]);
-
-  const handleAddTransaction = ({ transType, transaction }) => {
-    transType === "incomes" && setIncomes((prev) => [...prev, transaction]);
-    transType === "costs" && setCosts((prev) => [...prev, transaction]);
-  };
 
   const setTransactionsCat = ({ categories, transType }) => {
     transType === "incomes" && setIncomesCat(categories);
@@ -32,32 +32,15 @@ const App = () => {
     });
 
   useEffect(() => {
-    getTransactionsApi("incomes").then((incomes) => setIncomes(incomes));
-    getTransactionsApi("costs").then((costs) => setCosts(costs));
+    !costs.length && dispatch(getIncomes());
+    !incomes.length && dispatch(getCosts());
   }, []);
 
   return (
     <>
-      {/* <Route path="/" component={MainPage} />
-      <Route
-        path="/"
-        render={() => (
-          <MainPage handleOpenTransaction={handleOpenTransaction} />
-        )}
-      /> */}
       <Switch>
-        <Route path="/transaction/:transType">
-          <TransactionPage
-            incomesCatProp={incomesCat}
-            costsCatProp={costsCat}
-            handleAddTransaction={handleAddTransaction}
-            postTransactionCat={postTransactionCat}
-            setTransactionsCat={setTransactionsCat}
-          />
-        </Route>
-        <Route path="/period/:transType">
-          <TransactionsPerPeriod costs={costs} incomes={incomes} />
-        </Route>
+        <Route path="/transaction/:transType" component={TransactionPage} />
+        <Route path="/period/:transType" component={TransactionsPerPeriod} />
         <Route path="/" component={MainPage} />
       </Switch>
     </>

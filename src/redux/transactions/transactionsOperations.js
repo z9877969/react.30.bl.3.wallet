@@ -1,4 +1,5 @@
 import { getTransactionsApi, postTransactionApi } from "../../utils/apiService";
+import { addTransactionApi } from "../../utils/firebaseApi";
 import {
   getCostsRequest,
   getCostsSuccess,
@@ -32,12 +33,19 @@ export const getIncomes = () => (dispatch) => {
 
 export const addTransaction =
   ({ transType, transaction }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
     transType === "incomes"
       ? dispatch(addIncomesRequest())
       : dispatch(addCostsRequest());
 
-    postTransactionApi({ apiEnd: transType, data: transaction })
+    const { localId, idToken } = getState().auth.user;
+
+    addTransactionApi({
+      localId,
+      transType,
+      transaction,
+      idToken,
+    })
       .then((transaction) => {
         transType === "incomes"
           ? dispatch(addIncomesSuccess(transaction))
@@ -49,5 +57,3 @@ export const addTransaction =
           : dispatch(addCostsError(e.message));
       });
   };
-
-// dispatch(getCosts());
